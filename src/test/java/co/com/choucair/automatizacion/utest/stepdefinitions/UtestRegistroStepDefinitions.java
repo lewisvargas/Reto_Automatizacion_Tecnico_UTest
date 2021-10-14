@@ -20,15 +20,20 @@ public class UtestRegistroStepDefinitions {
 
     @Given("^Jose click on Join Today to start filling in the basic user data$")
     public void joseClickOnJoinTodayToStartFillingInTheBasicUserData (List<UtestData> utestData) throws Exception {
-        OnStage.theActorCalled("Jose").wasAbleTo(RegistrarDatosBasicos.thePage(), (DatosBasicos.onThePage()));
+        OnStage.theActorCalled("Jose").wasAbleTo(RegistrarDatosBasicos.thePage(),
+                (DatosBasicos.onThePage(utestData.get(0).getStrName(), utestData.get(0).getStrLastName(),
+                        utestData.get(0).getStrEmail(), utestData.get(0).getStrDate())));
     }
 
     @When("^He continues to fill out the form with secondary data that the page indicates$")
     public void heContinuesToFillOutTheFormWithSecondaryDataThatThePageIndicates (List<UtestData> utestData) throws Exception {
-        OnStage.theActorCalled("DatosSecundarios").wasAbleTo(RegistrarDatosSecundarios.thePage(),
-                (DatosSecundarios.onThePage()));
-        OnStage.theActorCalled("DatosAdicionales").wasAbleTo(RegistrarDatosAdicionales.thePage(),
-                (DatosAdicionales.onThePage()));
+        OnStage.theActorInTheSpotlight().attemptsTo(RegistrarDatosSecundarios.thePage(),
+                (DatosSecundarios.onThePage(utestData.get(0).getStrCity(), utestData.get(0).getStrZipCode(),
+                        utestData.get(0).getStrCountry())));
+        OnStage.theActorInTheSpotlight().attemptsTo(RegistrarDatosAdicionales.thePage(),
+                (DatosAdicionales.onThePage(utestData.get(0).getStrComputador(), utestData.get(0).getStrVersion(),
+                        utestData.get(0).getStrLenguage(), utestData.get(0).getStrMobile(), utestData.get(0).getStrModel(),
+                        utestData.get(0).getStrSystemOperating())));
     }
 
     @Then("^They ask you as a user to establish a password to log in$")
